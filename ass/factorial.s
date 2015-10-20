@@ -12,5 +12,4 @@ main:
 	je end
 	jmp factorial
 end:
-	pushl %eax
-	call exit
+	ret
