@@ -10,7 +10,7 @@ int ex(nodeType *p) {
     if (!p) return 0;
     switch(p->type) {
     case typeCon:       
-        printf("\tpush\t%d\n", p->con.value); 
+        printf("\tpush\t$%d\n", p->con.value); 
         break;
     case typeId:        
         printf("\tpush\t%c\n", p->id.i + 'a'); 
@@ -44,7 +44,7 @@ int ex(nodeType *p) {
             break;
         case PRINT:     
             ex(p->opr.op[0]);
-            printf("\tprint\n");
+            printf("\tcall\tprintf\n");
             break;
         case '=':       
             ex(p->opr.op[1]);
@@ -56,7 +56,7 @@ int ex(nodeType *p) {
             break;
 	case FACT:
   	    ex(p->opr.op[0]);
-	    printf("\tfact\n");
+	    printf("\tjmp\tfact\n");
 	    break;
 	case LNTWO:
 	    ex(p->opr.op[0]);
@@ -68,7 +68,7 @@ int ex(nodeType *p) {
             switch(p->opr.oper) {
 	    case GCD:   printf("\tgcd\n"); break;
             case '+':   printf("\tadd\n"); break;
-            case '-':   printf("\tsub\n"); break; 
+            case '-':   printf("\tsub \t%%eax,%%ecx\n"); break; 
             case '*':   printf("\tmul\n"); break;
             case '/':   printf("\tdiv\n"); break;
             case '<':   printf("\tcompLT\n"); break;
