@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include "calc3.h"
 #include "y.tab.h"
+#define ADRS "%eax"
 
 static int lbl;
+
+void popStack(char f[], char s[]){
+  printf("\tpopl\t%%%s\n", f);
+  printf("\tpopl\t%%%s\n",s);
+}
 
 int ex(nodeType *p) {
     int lbl1, lbl2;
@@ -10,7 +16,7 @@ int ex(nodeType *p) {
     if (!p) return 0;
     switch(p->type) {
     case typeCon:       
-        printf("\tpush\t%d\n", p->con.value); 
+        printf("\tpushl\t\$%d\n", p->con.value); 
         break;
     case typeId:        
         printf("\tpush\t%c\n", p->id.i + 'a'); 
@@ -20,7 +26,7 @@ int ex(nodeType *p) {
         case WHILE:
             printf("L%03d:\n", lbl1 = lbl++);
             ex(p->opr.op[0]);
-            printf("\tjz\tL%03d\n", lbl2 = lbl++);
+            printf("\tjge\tL%03d\n", lbl2 = lbl++);
             ex(p->opr.op[1]);
             printf("\tjmp\tL%03d\n", lbl1);
             printf("L%03d:\n", lbl2);
@@ -44,7 +50,11 @@ int ex(nodeType *p) {
             break;
         case PRINT:     
             ex(p->opr.op[0]);
-            printf("\tprint\n");
+	    printf("\tmovl\t%%esp, %%ebx\n");
+	    printf("\tpushl\t$prnt_int\n");
+            printf("\tcall\tprintf\n");
+	    printf("\tmovl\t%%ebx, %%esp\n");
+	    printf("\tpopl\ti\n");
             break;
         case '=':       
             ex(p->opr.op[1]);
@@ -68,12 +78,19 @@ int ex(nodeType *p) {
             switch(p->opr.oper) {
 	    case GCD:   printf("\tgcd\n"); break;
             case '+':   printf("\tadd\n"); break;
-            case '-':   printf("\tsub\n"); break; 
+            case '-':   
+	      popStack("ebx","eax");
+	      printf("\tsub\t%%ebx, %%eax\n");
+	      printf("\tpushl\t%%eax\n");
+	      break;
             case '*':   printf("\tmul\n"); break;
             case '/':   printf("\tdiv\n"); break;
             case '<':   printf("\tcompLT\n"); break;
             case '>':   printf("\tcompGT\n"); break;
-            case GE:    printf("\tcompGE\n"); break;
+            case GE:    
+	      popStack("edx","eax");
+	      printf("\tcmp\t%%eax, %%edx\n"); 
+	      break;
             case LE:    printf("\tcompLE\n"); break;
             case NE:    printf("\tcompNE\n"); break;
             case EQ:    printf("\tcompEQ\n"); break;
