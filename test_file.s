@@ -1,0 +1,143 @@
+.section .data
+fact_m:
+	.asciz "%d\n"
+
+.section .text
+fact:
+	movl 	4(%esp), %ecx
+	movl 	$1, %eax
+	cmpb 	$0,%cl
+	jle 	done
+do_fact:
+	mull 	%ecx
+	cmpb 	$0,%cl
+	dec		%ecx
+	jle 	done
+	jmp 	do_fact
+done:
+	ret
+.global main
+main:
+	push	$0
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$1
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$1
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$1
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$2
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$2
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$3
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$6
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$4
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$24
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$5
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$120
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$6
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$720
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$7
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$5040
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$8
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$40320
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$9
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$362880
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$10
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$3628800
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	push	$11
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	push	$39916800
+	pop	%edi
+	sub	%edi,%eax
+	pushl	%eax
+	pushl	$fact_m
+	call	printf
+	jmp end
+end:
+	call exit

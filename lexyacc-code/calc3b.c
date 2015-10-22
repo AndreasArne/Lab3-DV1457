@@ -44,6 +44,7 @@ int ex(nodeType *p) {
             break;
         case PRINT:     
             ex(p->opr.op[0]);
+            printf("\tpushl\t$fact_m\n");
             printf("\tcall\tprintf\n");
             break;
         case '=':       
@@ -56,11 +57,14 @@ int ex(nodeType *p) {
             break;
 	case FACT:
   	    ex(p->opr.op[0]);
-	    printf("\tjmp\tfact\n");
+	    printf("%s%s%s", 
+            "\tcall\tfact\n",
+            "\taddl\t$4,%esp\n",
+            "\tpushl\t%eax\n");
 	    break;
 	case LNTWO:
 	    ex(p->opr.op[0]);
-	    printf("\lntwo\n");
+	    printf("\ntwo\n");
 	    break;
         default:
             ex(p->opr.op[0]);
@@ -68,7 +72,11 @@ int ex(nodeType *p) {
             switch(p->opr.oper) {
 	    case GCD:   printf("\tgcd\n"); break;
             case '+':   printf("\tadd\n"); break;
-            case '-':   printf("\tsub \t%%eax,%%ecx\n"); break; 
+            case '-':   printf("%s%s%s", 
+                                "\tpop\t%edi\n",
+                                /*"\tpop\t%eax\n",*/
+                                "\tsub\t%edi,%eax\n",
+                                "\tpushl\t%eax\n"); break;//printf("\tsub \t%%eax,%%ecx\n"); break; 
             case '*':   printf("\tmul\n"); break;
             case '/':   printf("\tdiv\n"); break;
             case '<':   printf("\tcompLT\n"); break;

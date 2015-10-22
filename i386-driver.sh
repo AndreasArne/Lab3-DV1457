@@ -16,20 +16,21 @@ GLOBAL_M=".global main"
 MAIN="main:"
 END="end:"
 
+rm ./test_file.s
 touch ./test_file.s
 
-echo "$SECTION $TEXT" 	>> test_file.s
+#echo "$SECTION $TEXT" 	>> test_file.s
 echo "$FACT"			>> test_file.s
 echo "$GLOBAL_M"		>> test_file.s
 echo "$MAIN"			>> test_file.s
 echo "$CODE"			>> test_file.s
 echo -e "\tjmp end"		>> test_file.s
 echo "$END"				>> test_file.s
-#echo -e "\tint 80h"		>> test_file.s
+echo -e "\tcall exit"	>> test_file.s
 
 cat ./test_file.s
 
 gcc -g test_file.s -o test_s
 
-rm ./test_file.s
+#rm ./test_file.s
 
