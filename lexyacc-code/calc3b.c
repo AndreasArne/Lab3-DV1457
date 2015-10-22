@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include "calc3.h"
 #include "y.tab.h"
-#define ADRS "%eax"
 
-static int lbl;
+static int lbl = 0;
 
 void popStack(char f[], char s[]){
   printf("\tpopl\t%%%s\n", f);
@@ -19,14 +18,14 @@ int ex(nodeType *p) {
         printf("\tpushl\t\$%d\n", p->con.value); 
         break;
     case typeId:        
-        printf("\tpush\t%c\n", p->id.i + 'a'); 
+      printf("\tpushl\t%c\n", p->id.i + 'a'); 
         break;
     case typeOpr:
         switch(p->opr.oper) {
         case WHILE:
             printf("L%03d:\n", lbl1 = lbl++);
+	    lbl2 = lbl;
             ex(p->opr.op[0]);
-            printf("\tjge\tL%03d\n", lbl2 = lbl++);
             ex(p->opr.op[1]);
             printf("\tjmp\tL%03d\n", lbl1);
             printf("L%03d:\n", lbl2);
@@ -54,11 +53,11 @@ int ex(nodeType *p) {
 	    printf("\tpushl\t$prnt_int\n");
             printf("\tcall\tprintf\n");
 	    printf("\tmovl\t%%ebx, %%esp\n");
-	    printf("\tpopl\ti\n");
+	    printf("\taddl\t$4, %%esp\n");
             break;
         case '=':       
             ex(p->opr.op[1]);
-            printf("\tpop\t%c\n", p->opr.op[0]->id.i + 'a');
+            printf("\tpopl\t%c\n", p->opr.op[0]->id.i + 'a');
             break;
         case UMINUS:    
             ex(p->opr.op[0]);
@@ -77,19 +76,32 @@ int ex(nodeType *p) {
             ex(p->opr.op[1]);
             switch(p->opr.oper) {
 	    case GCD:   printf("\tgcd\n"); break;
-            case '+':   printf("\tadd\n"); break;
+            case '+':   
+	      popStack("ebx","eax");
+	      printf("\tadd\t%%ebx, %%eax\n");
+	      printf("\tpushl\t%%eax\n");
+	      break;
             case '-':   
 	      popStack("ebx","eax");
 	      printf("\tsub\t%%ebx, %%eax\n");
 	      printf("\tpushl\t%%eax\n");
 	      break;
             case '*':   printf("\tmul\n"); break;
-            case '/':   printf("\tdiv\n"); break;
+            case '/':   
+	      popStack("ebx","eax");
+	      printf("\tdiv\t%%ebx\n");
+	      printf("\tpushl\t%%eax\n");
+	      break;
             case '<':   printf("\tcompLT\n"); break;
-            case '>':   printf("\tcompGT\n"); break;
+            case '>':  
+	      popStack("edx","eax");
+	      printf("\tcmp\t%%edx,%%eax\n");
+	      printf("\tjle\tL%03d\n", lbl2 = lbl++);
+	      break;
             case GE:    
 	      popStack("edx","eax");
 	      printf("\tcmp\t%%eax, %%edx\n"); 
+	      printf("\tjge\tL%03d\n", lbl2 = lbl++);
 	      break;
             case LE:    printf("\tcompLE\n"); break;
             case NE:    printf("\tcompNE\n"); break;
