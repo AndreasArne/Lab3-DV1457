@@ -2,13 +2,12 @@
 #include "calc3.h"
 #include "y.tab.h"
 
-static int lbl = 0;
+static int lbl;
 
 void popStack(char f[], char s[]){
   printf("\tpopl\t%%%s\n", f);
   printf("\tpopl\t%%%s\n",s);
 }
-
 int ex(nodeType *p) {
     int lbl1, lbl2;
 
@@ -18,7 +17,7 @@ int ex(nodeType *p) {
         printf("\tpushl\t$%d\n", p->con.value); 
         break;
     case typeId:        
-      printf("\tpushl\t%c\n", p->id.i + 'a'); 
+      printf("\tpushl\t%d(%%ebp)\n", -(p->id.i + 1) * 4); 
         break;
     case typeOpr:
         switch(p->opr.oper) {
@@ -55,7 +54,7 @@ int ex(nodeType *p) {
             break;
         case '=':       
             ex(p->opr.op[1]);
-            printf("\tpopl\t%c\n", p->opr.op[0]->id.i + 'a');
+            printf("\tpopl\t%d(%%ebp)\n", -(p->opr.op[0]->id.i + 1) * 4);
             break;
         case UMINUS:    
             ex(p->opr.op[0]);
