@@ -15,7 +15,7 @@ int ex(nodeType *p) {
     if (!p) return 0;
     switch(p->type) {
     case typeCon:       
-        printf("\tpushl\t\$%d\n", p->con.value); 
+        printf("\tpushl\t$%d\n", p->con.value); 
         break;
     case typeId:        
       printf("\tpushl\t%c\n", p->id.i + 'a'); 
@@ -49,15 +49,13 @@ int ex(nodeType *p) {
             break;
         case PRINT:     
             ex(p->opr.op[0]);
-	    printf("\tmovl\t%%esp, %%ebx\n");
-	    printf("\tpushl\t$prnt_int\n");
+            printf("\tpushl\t$prnt_int\n");
             printf("\tcall\tprintf\n");
-	    printf("\tmovl\t%%ebx, %%esp\n");
-	    printf("\taddl\t$4, %%esp\n");
+            printf("\taddl\t$4, %%esp\n");
             break;
         case '=':       
             ex(p->opr.op[1]);
-            printf("\tpopl\t%c\n", p->opr.op[0]->id.i + 'a');
+            printf("\tpopl\t%%eax\n", p->opr.op[0]->id.i + 'a');
             break;
         case UMINUS:    
             ex(p->opr.op[0]);
@@ -65,11 +63,14 @@ int ex(nodeType *p) {
             break;
 	case FACT:
   	    ex(p->opr.op[0]);
-	    printf("\tfact\n");
+	    printf("%s%s%s", 
+            "\tcall\tfact\n",
+            "\taddl\t$4,%esp\n",
+            "\tpushl\t%eax\n");
 	    break;
 	case LNTWO:
 	    ex(p->opr.op[0]);
-	    printf("\lntwo\n");
+	    printf("\ntwo\n");
 	    break;
         default:
             ex(p->opr.op[0]);
