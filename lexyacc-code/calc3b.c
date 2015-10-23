@@ -55,7 +55,7 @@ int ex(nodeType *p) {
             break;
         case '=':       
             ex(p->opr.op[1]);
-            printf("\tpopl\t%%eax\n", p->opr.op[0]->id.i + 'a');
+            printf("\tpopl\t%c\n", p->opr.op[0]->id.i + 'a');
             break;
         case UMINUS:    
             ex(p->opr.op[0]);
