@@ -1,8 +1,3 @@
-.section .data
-fact_m:
-	.asciz "%d\n"
-
-.section .text
 fact:
 	movl 	4(%esp), %ecx
 	movl 	$1, %eax

@@ -1,7 +1,6 @@
 .section .data
-fact_m:
-	.asciz "%d\n"
-
+prnt_int:
+	.asciz "%d"
 .section .text
 fact:
 	movl 	4(%esp), %ecx
@@ -18,126 +17,28 @@ done:
 	ret
 .global main
 main:
-	push	$0
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$1
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
+	pushl	$100
+	popl	%eax
+L000:
+	pushl	i
+	pushl	$0
+	popl	%edx
+	popl	%eax
+	cmp	%eax, %edx
+	jge	L001
+	pushl	i
+	pushl	$prnt_int
 	call	printf
-	push	$1
-	call	fact
-	addl	$4,%esp
+	addl	$4, %esp
+	pushl	i
+	pushl	$1
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
 	pushl	%eax
-	push	$1
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$2
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$2
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$3
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$6
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$4
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$24
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$5
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$120
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$6
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$720
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$7
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$5040
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$8
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$40320
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$9
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$362880
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$10
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$3628800
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
-	push	$11
-	call	fact
-	addl	$4,%esp
-	pushl	%eax
-	push	$39916800
-	pop	%edi
-	sub	%edi,%eax
-	pushl	%eax
-	pushl	$fact_m
-	call	printf
+	popl	%eax
+	jmp	L000
+L001:
 	jmp end
 end:
 	call exit
