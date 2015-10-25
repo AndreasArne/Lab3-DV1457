@@ -30,20 +30,20 @@ int ex(nodeType *p) {
             printf("L%03d:\n", lbl2);
             break;
         case IF:
-            ex(p->opr.op[0]);
+          lbl2 = lbl; 
+	  ex(p->opr.op[0]);
             if (p->opr.nops > 2) {
                 /* if else */
-                printf("\tjz\tL%03d\n", lbl1 = lbl++);
                 ex(p->opr.op[1]);
-                printf("\tjmp\tL%03d\n", lbl2 = lbl++);
-                printf("L%03d:\n", lbl1);
-                ex(p->opr.op[2]);
+                printf("\tjmp\tL%03d\n", lbl1 = lbl++);
                 printf("L%03d:\n", lbl2);
+                ex(p->opr.op[2]);
+                printf("L%03d:\n", lbl1);
             } else {
                 /* if */
                 printf("\tjz\tL%03d\n", lbl1 = lbl++);
                 ex(p->opr.op[1]);
-                printf("L%03d:\n", lbl1);
+                printf("L%03d:\n", lbl2);
             }
             break;
         case PRINT:     
@@ -58,7 +58,9 @@ int ex(nodeType *p) {
             break;
         case UMINUS:    
             ex(p->opr.op[0]);
-            printf("\tneg\n");
+	    printf("\tpopl\t%%eax\n");
+            printf("\tneg\t%%eax\n");
+	    printf("\tpushl\t%%eax\n");
             break;
 	case FACT:
   	    ex(p->opr.op[0]);
@@ -75,7 +77,9 @@ int ex(nodeType *p) {
             ex(p->opr.op[0]);
             ex(p->opr.op[1]);
             switch(p->opr.oper) {
-	    case GCD:   printf("\tgcd\n"); break;
+	      /*case GCD:   
+	      printf("\tgcd\n"); 
+	      break;*/
             case '+':   
 	      popStack("ebx","eax");
 	      printf("\tadd\t%%ebx, %%eax\n");
@@ -86,7 +90,11 @@ int ex(nodeType *p) {
 	      printf("\tsub\t%%ebx, %%eax\n");
 	      printf("\tpushl\t%%eax\n");
 	      break;
-            case '*':   printf("\tmul\n"); break;
+            case '*':   
+	      popStack("ebx","eax");
+	      printf("\tmull\t%%ebx\n");
+	      printf("\tpushl\t%%eax\n");
+	      break;
             case '/':   
 	      popStack("ebx","eax");
 	      printf("\tdiv\t%%ebx\n");
@@ -104,8 +112,16 @@ int ex(nodeType *p) {
 	      printf("\tjge\tL%03d\n", lbl2 = lbl++);
 	      break;
             case LE:    printf("\tcompLE\n"); break;
-            case NE:    printf("\tcompNE\n"); break;
-            case EQ:    printf("\tcompEQ\n"); break;
+            case NE:    
+	      popStack("eax","ebx");
+	      printf("\tcmp\t%%ebx, %%eax\n");
+	      printf("\tje\tL%03d\n", lbl2 = lbl++);
+	      break;
+            case EQ:   
+	      popStack("eax","ebx");
+	      printf("\tcmp\t%%ebx, %%eax\n");
+	      printf("\tjne\tL%03d\n", lbl2 = lbl++);
+	      break;
             }
         }
     }
