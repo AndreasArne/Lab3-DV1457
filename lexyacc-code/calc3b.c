@@ -50,7 +50,7 @@ int ex(nodeType *p) {
             ex(p->opr.op[0]);
             printf("\tpushl\t$prnt_int\n");
             printf("\tcall\tprintf\n");
-            printf("\taddl\t$4, %%esp\n");
+            printf("\taddl\t$8, %%esp\n");
             break;
         case '=':       
             ex(p->opr.op[1]);

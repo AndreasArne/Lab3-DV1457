@@ -17,8 +17,8 @@ GLOBAL_M=".global main"
 MAIN="main:"
 END="end:"
 PRNT_INT="prnt_int:\n\t.asciz \"%d\\\n\""
-PRE="\tpushl %ebp\n\tmovl %esp, %ebp"
-END="\tmovl %ebp, %esp\n\tpop %ebp\n\tcall exit"
+PRE="\tpushl %ebp\n\tmovl %esp, %ebp\nsub\t\$100, %esp"
+END="\tmovl %ebp, %esp\n\tpopl %ebp\n\tcall exit"
 
 rm ./test_file.s
 touch ./test_file.s
