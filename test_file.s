@@ -17,28 +17,150 @@ done:
 	ret
 .global main
 main:
-	pushl	$100
-	popl	%eax
-L000:
-	pushl	i
 	pushl	$0
-	popl	%edx
-	popl	%eax
-	cmp	%eax, %edx
-	jge	L001
-	pushl	i
-	pushl	$prnt_int
-	call	printf
-	addl	$4, %esp
-	pushl	i
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
 	pushl	$1
 	popl	%ebx
 	popl	%eax
 	sub	%ebx, %eax
 	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$1
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$1
+	popl	%ebx
 	popl	%eax
-	jmp	L000
-L001:
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$2
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$2
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$3
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$6
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$4
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$24
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$5
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$120
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$6
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$720
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$7
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$5040
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$8
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$40320
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$9
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$362880
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$10
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$3628800
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
+	pushl	$11
+	call	fact
+	addl	$4,%esp
+	pushl	%eax
+	pushl	$39916800
+	popl	%ebx
+	popl	%eax
+	sub	%ebx, %eax
+	pushl	%eax
+	pushl	$prnt_int
+	call	printf
+	addl	$4, %esp
 	jmp end
 end:
 	call exit
