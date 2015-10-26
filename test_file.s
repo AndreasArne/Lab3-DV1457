@@ -1,6 +1,6 @@
 .section .data
 prnt_int:
-	.asciz "%d"
+	.asciz "%d\n"
 .section .text
 fact:
 	movl 	4(%esp), %ecx
@@ -17,6 +17,8 @@ done:
 	ret
 .global main
 main:
+	pushl %ebp
+	movl %esp, %ebp
 	pushl	$0
 	call	fact
 	addl	$4,%esp
@@ -161,6 +163,6 @@ main:
 	pushl	$prnt_int
 	call	printf
 	addl	$4, %esp
-	jmp end
-end:
+	movl %ebp, %esp
+	pop %ebp
 	call exit

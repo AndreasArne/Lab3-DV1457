@@ -16,7 +16,9 @@ TEXT=".text"
 GLOBAL_M=".global main"
 MAIN="main:"
 END="end:"
-PRNT_INT="prnt_int:\n\t.asciz \"%d\""
+PRNT_INT="prnt_int:\n\t.asciz \"%d\\\n\""
+PRE="\tpushl %ebp\n\tmovl %esp, %ebp"
+END="\tmovl %ebp, %esp\n\tpop %ebp\n\tcall exit"
 
 rm ./test_file.s
 touch ./test_file.s
@@ -27,10 +29,9 @@ echo "$SECTION $TEXT" 	>> test_file.s
 echo "$FACT"			>> test_file.s
 echo "$GLOBAL_M"		>> test_file.s
 echo "$MAIN"			>> test_file.s
+echo -e "$PRE"			>> test_file.s
 echo "$CODE"			>> test_file.s
-echo -e "\tjmp end"		>> test_file.s
-echo "$END"				>> test_file.s
-echo -e "\tcall exit"	>> test_file.s
+echo -e "$END"			>> test_file.s
 
 cat ./test_file.s
 
