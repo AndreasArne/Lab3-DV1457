@@ -82,22 +82,22 @@ int ex(nodeType *p) {
 	      break;*/
             case '+':   
 	      popStack("ebx","eax");
-	      printf("\tadd\t%%ebx, %%eax\n");
+	      printf("\taddl\t%%ebx, %%eax\n");
 	      printf("\tpushl\t%%eax\n");
 	      break;
             case '-':   
 	      popStack("ebx","eax");
-	      printf("\tsub\t%%ebx, %%eax\n");
+	      printf("\tsubl\t%%ebx, %%eax\n");
 	      printf("\tpushl\t%%eax\n");
 	      break;
             case '*':   
 	      popStack("ebx","eax");
-	      printf("\tmull\t%%ebx\n");
+	      printf("\timull\t%%ebx\n");
 	      printf("\tpushl\t%%eax\n");
 	      break;
             case '/':   
 	      popStack("ebx","eax");
-	      printf("\tdiv\t%%ebx\n");
+	      printf("\tidivl\t%%ebx\n");
 	      printf("\tpushl\t%%eax\n");
 	      break;
             case '<':   printf("\tcompLT\n"); break;
