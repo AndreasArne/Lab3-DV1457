@@ -8,9 +8,9 @@ cleanup: build
 	@rm ./lexyacc-code/y.tab.h
 
 build: flex_bison
-	@echo "Building: gcc ./lexyacc-code/y.tab.o ./lexyacc-code/lex.yy.o ./lexyacc-code/calc3b.c -o calc3b"
-	@gcc ./lexyacc-code/y.tab.o ./lexyacc-code/lex.yy.o ./lexyacc-code/calc3b.c -o calc3b
-	@mv calc3b ./bin
+	@echo "Building: gcc ./lexyacc-code/y.tab.o ./lexyacc-code/lex.yy.o ./lexyacc-code/calc3i.c -o calc3i"
+	@gcc ./lexyacc-code/y.tab.o ./lexyacc-code/lex.yy.o ./lexyacc-code/calc3i.c -o calc3i
+	@mv calc3i ./bin
 
 flex_bison: flex
 	@echo "flex_bison: gcc -c ./lexyacc-code/y.tab.c ./lexyacc-code/lex.yy.c"

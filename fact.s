@@ -19,6 +19,7 @@ done:
 main:
 	pushl %ebp
 	movl %esp, %ebp
+sub	$100, %esp
 	pushl	$0
 	call	fact
 	addl	$4,%esp
@@ -26,11 +27,11 @@ main:
 	pushl	$1
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$1
 	call	fact
 	addl	$4,%esp
@@ -38,11 +39,11 @@ main:
 	pushl	$1
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$2
 	call	fact
 	addl	$4,%esp
@@ -50,11 +51,11 @@ main:
 	pushl	$2
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$3
 	call	fact
 	addl	$4,%esp
@@ -62,11 +63,11 @@ main:
 	pushl	$6
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$4
 	call	fact
 	addl	$4,%esp
@@ -74,11 +75,11 @@ main:
 	pushl	$24
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$5
 	call	fact
 	addl	$4,%esp
@@ -86,11 +87,11 @@ main:
 	pushl	$120
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$6
 	call	fact
 	addl	$4,%esp
@@ -98,11 +99,11 @@ main:
 	pushl	$720
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$7
 	call	fact
 	addl	$4,%esp
@@ -110,11 +111,11 @@ main:
 	pushl	$5040
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$8
 	call	fact
 	addl	$4,%esp
@@ -122,11 +123,11 @@ main:
 	pushl	$40320
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$9
 	call	fact
 	addl	$4,%esp
@@ -134,11 +135,11 @@ main:
 	pushl	$362880
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$10
 	call	fact
 	addl	$4,%esp
@@ -146,11 +147,11 @@ main:
 	pushl	$3628800
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	pushl	$11
 	call	fact
 	addl	$4,%esp
@@ -158,11 +159,11 @@ main:
 	pushl	$39916800
 	popl	%ebx
 	popl	%eax
-	sub	%ebx, %eax
+	subl	%ebx, %eax
 	pushl	%eax
 	pushl	$prnt_int
 	call	printf
-	addl	$4, %esp
+	addl	$8, %esp
 	movl %ebp, %esp
-	pop %ebp
+	popl %ebp
 	call exit
